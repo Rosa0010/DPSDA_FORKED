@@ -37,4 +37,4 @@ RUN cd data && python get_cifar10.py && cd .. && \
     cd models && ./get_models.sh && cd ..
 
 # Set the default command to run the test script
-CMD ["./scripts/main_improved_diffusion_cifar10_conditional.sh"]
+CMD ["/bin/bash", "-c", "./scripts/main_improved_diffusion_cifar10_conditional.sh"]
