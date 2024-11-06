@@ -22,3 +22,19 @@ RUN pip install accelerate
 RUN pip install wilds
 RUN git clone https://github.com/openai/improved-diffusion.git
 RUN cd improved-diffusion; pip install -e .
+
+ENV DEBIAN_FRONTEND=noninteractive
+WORKDIR /app
+
+COPY . .
+
+RUN chmod +x /app/models/get_models.sh
+RUN chmod +x /app/scripts/main_improved_diffusion_cifar10_conditional.sh
+
+
+# Run the commands for dataset and model preparation
+RUN cd data && python get_cifar10.py && cd .. && \
+    cd models && ./get_models.sh && cd ..
+
+# Set the default command to run the test script
+CMD ["./scripts/main_improved_diffusion_cifar10_conditional.sh"]
